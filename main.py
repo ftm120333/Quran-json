@@ -1,6 +1,6 @@
 
 import json
-
+import codecs
 
 if __name__ == '__main__':
     mushaf = {}
@@ -25,8 +25,8 @@ if __name__ == '__main__':
         mushaf[str(x)] = verses
    # print(mushaf)
 
-    with open('mushaf_ident2.json', 'w') as fp:
-         json.dump(mushaf, fp, indent= 4)
+    with codecs.open('mushaf_ident5.json', 'w') as fp:
+         fp.write(json.dumps(mushaf, ensure_ascii= False,indent=2))
 
    # print(verses)
     #mushaf['verses']
