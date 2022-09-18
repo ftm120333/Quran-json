@@ -1,36 +1,22 @@
 
 import json
-import codecs
 
 if __name__ == '__main__':
     mushaf = {}
-    listOfVerses = []
-    f = open('hafs.json', "r")
+    setOfSurah = []
+    surahNamesCheckList = [] #contains surahs that were added used for lookup only
+    f = open('hafs.json', "r", encoding='utf-8')
 
-    data = json.loads(f.read())
-    for x in range(1,605):
-        verses = {}
-        for j in range(6236):
-           if x == data[j]['page']:
-               verse = {}
-               verse['jozz'] = data[j]['jozz']
-               verse['sura_name_en'] = data[j]['sura_name_en']
-               verse['sura_name_ar'] = data[j]['sura_name_ar']
-               verse['aya_no'] = data[j]['aya_no']
-               verse['aya_text_emlaey'] = data[j]['aya_text_emlaey']
-               listOfVerses.append(verse)
-        verses['verses'] = listOfVerses
-       # print(listOfVerses[0])
+    verses = json.loads(f.read())
 
-        mushaf[str(x)] = verses
-   # print(mushaf)
+    for verse in verses:
+        if verse["jozz"] not in surahNamesCheckList:
+            setOfSurah.append({ "jozz":verse["jozz"],"page": verse["page"],"aya_text_emlaey": verse["aya_text_emlaey"]})
+            surahNamesCheckList.append(verse["jozz"])
 
-    with codecs.open('mushaf_ident5.json', 'w') as fp:
-         fp.write(json.dumps(mushaf, ensure_ascii= False,indent=2))
+    # surah.clear()
 
-   # print(verses)
-    #mushaf['verses']
-               #res_count = data[2]['sura_name_en']
-    #print(data['id'])
-    #print(res_count)
+    with open('jozz-info.json', 'w', encoding='utf-8') as fp:
+        json.dump(setOfSurah, fp, ensure_ascii=False)
+
     f.close()

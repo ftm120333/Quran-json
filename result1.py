@@ -1,5 +1,6 @@
-import json
 
+import json
+import codecs
 
 if __name__ == '__main__':
     mushaf = {}
@@ -8,9 +9,7 @@ if __name__ == '__main__':
 
     data = json.loads(f.read())
     for x in range(1,605):
-        verses = []
-
-
+        verses = {}
         for j in range(6236):
            if x == data[j]['page']:
                verse = {}
@@ -19,14 +18,16 @@ if __name__ == '__main__':
                verse['sura_name_ar'] = data[j]['sura_name_ar']
                verse['aya_no'] = data[j]['aya_no']
                verse['aya_text_emlaey'] = data[j]['aya_text_emlaey']
-               verses.append(verse)
+               listOfVerses.append(verse)
+        verses['verses'] = listOfVerses
        # print(listOfVerses[0])
 
         mushaf[str(x)] = verses
-    print(mushaf)
+   # print(mushaf)
 
-    with open('result.json', 'w') as fp:
-        json.dump(mushaf, fp)
+    with codecs.open('mushaf_ident5.json', 'w') as fp:
+         fp.write(json.dumps(mushaf, ensure_ascii= False,indent=2))
+
    # print(verses)
     #mushaf['verses']
                #res_count = data[2]['sura_name_en']
